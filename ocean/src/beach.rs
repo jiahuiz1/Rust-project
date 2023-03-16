@@ -6,18 +6,19 @@ use std::slice::Iter;
 #[derive(Debug)]
 pub struct Beach {
     // TODO: Declare the fields of the Beach struct here.
+    crabs: Vec<Crab>,
 }
 
 impl Beach {
     pub fn new() -> Beach {
-        unimplemented!();
+        Beach { crabs: Vec::new() }
     }
 
     /**
      * Returns the number of crabs on the beach.
      */
     pub fn size(&self) -> usize {
-        unimplemented!();
+        self.crabs.len()
     }
 
     /**
@@ -28,15 +29,15 @@ impl Beach {
      *     - The newly added crab should be at the END of the collection.
      */
     pub fn add_crab(&mut self, crab: Crab) {
-        unimplemented!();
+        self.crabs.push(crab)
     }
 
     pub fn get_crab(&self, index: usize) -> &Crab {
-        unimplemented!();
+        &self.crabs[index]
     }
 
     pub fn crabs(&self) -> Iter<Crab> {
-        unimplemented!();
+        self.crabs.iter()
     }
 
     /**
@@ -45,14 +46,18 @@ impl Beach {
      *   - Some of a reference to the Crab with the highest speed.
      */
     pub fn get_fastest_crab(&self) -> Option<&Crab> {
-        unimplemented!();
+        if self.crabs.is_empty() {
+            return None;
+        }
+        let fastest_crab = self.crabs.iter().max_by_key(|c| c.speed);
+        fastest_crab
     }
 
     /**
      * Returns a vector of references to the crabs with a given name.
      */
     pub fn find_crabs_by_name(&self, name: &str) -> Vec<&Crab> {
-        unimplemented!();
+        self.crabs.iter().filter(|crab| crab.name == name).collect()
     }
 
     /**
@@ -61,6 +66,9 @@ impl Beach {
      * the method should panic.
      */
     pub fn breed_crabs(&mut self, i: usize, j: usize, name: String) {
-        unimplemented!();
+        let crab1 = self.get_crab(i);
+        let crab2 = self.get_crab(j);
+        let baby_crab = crab1.breed(crab2, name);
+        self.add_crab(baby_crab);
     }
 }
